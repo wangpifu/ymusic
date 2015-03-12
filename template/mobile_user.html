@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, height=device-height, user-scalable=no" name="viewport">
+  <title>{:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="mobile_static/flat.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="mobile_static/mobile.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('.item-image img').click(imageZoom);
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE mobile_header.html -->
+  <div id="wrapper">
+    <div class="content">
+      <div class="box">
+        <div class="cell">
+          <a class="tab<!-- IF postType == "topic" --> current<!-- ENDIF -->" href="./user.php<!-- IF userInfo.uid != loginInfo.uid -->?id={:userInfo.uid}<!-- ENDIF -->">主题</a>
+          <a class="tab<!-- IF postType == "reply" --> current<!-- ENDIF -->" href="./user.php?list=reply<!-- IF userInfo.uid != loginInfo.uid -->&id={:userInfo.uid}<!-- ENDIF -->">回复</a>
+          <!-- IF userInfo.uid == loginInfo.uid -->
+          <a class="tab<!-- IF postType == "favorite" --> current<!-- ENDIF -->" href="./user.php?list=favorite">收藏</a>
+          <a class="tab" href="./balance.php">账户</a>
+          <!-- ENDIF -->
+        </div>
+        <div class="cell">
+          <h3>
+          <!-- IF postType == "topic" -->
+            <!-- IF userInfo.uid == loginInfo.uid -->我<!-- ELSE -->{:userInfo.nickname}<!-- ENDIF -->发布的主题
+          <!-- ELSEIF postType == "reply" -->
+            <!-- IF userInfo.uid == loginInfo.uid -->我<!-- ELSE -->{:userInfo.nickname}<!-- ENDIF -->发表的回复
+          <!-- ELSEIF postType == "favorite" -->
+            我的收藏
+          <!-- ENDIF -->
+          </h3>
+        </div>
+        <!-- BEGIN postList.list -->
+          <div class="cell" id="topic-{:tid}">
+            <div class="item">
+              <div class="item-avatar"><a href="./user.php?id={:uid}"><img src="{:avatar}" alt="{:nickname}"></a></div>
+              <!-- IF top.postType == "favorite" --><div class="item-nickname"><a href="./user.php?id={:uid}">{:nickname}</a></div><!-- ENDIF -->
+               <div class="item-message">{:message}</div>
+               <!-- IF smallimg != "" --><div class="item-image"><img src="{:smallimg}" rel="{:bigimage}"></div><!-- ENDIF -->
+               <div class="item-info">
+                <!-- IF top.postType == "topic" -->
+                  <a href="./?cid={:cid}">{:clubname}</a>
+                  <span class="point">•</span>
+                  <a href="./t.php?id={:tid}">{:posttime}</a>
+                  <span class="point">•</span>
+                  <a href="./t.php?id={:tid}"><!-- IF comments > "0" --><strong>{:comments}</strong> <!-- ELSE -->暂无<!-- ENDIF -->回复</a>
+                <!-- ELSEIF top.postType == "reply" -->
+                  <a href="./t.php?id={:tid}#reply{:pid}">{:posttime}</a>
+                <!-- ELSEIF top.postType == "favorite" -->
+                  <a href="./t.php?id={:tid}">{:posttime}</a>
+                  <div class="action">
+                    <a id="topicFav" onclick="unFavoriteTopic({:tid});" class="favorited">取消收藏</a>
+                  </div>
+                <!-- ENDIF -->
+              </div>
+            </div>
+          </div>
+        <!-- END -->
+        <div class="inner">
+          <!-- IF postList.page.Total > "1" -->
+            <!-- IF postList.page.Prev != "" -->
+            <a href="{:postList.page.Prefix}{:postList.page.Prev}" class="page prev">上一页</a>
+            <!-- ENDIF -->
+            <!-- IF postList.page.Next != "" -->
+            <a href="{:postList.page.Prefix}{:postList.page.Next}" class="page next">下一页</a>
+            <!-- ENDIF -->
+            <strong>{:postList.page.Current} / {:postList.page.Total}</strong>
+          <!-- ELSE -->
+            <strong><!-- IF postList.count > "0" -->已加载全部数据<!-- ELSE -->暂无数据<!-- ENDIF --></strong>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- INCLUDE mobile_footer.html -->
+</body>
+</html>

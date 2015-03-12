@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Ymusic</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.image.js"></script>
+  <script type="text/javascript" src="static/jquery.form.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#openmap").click(function(){
+        window.location.href="./map.php?lat={:coninfo.lat}&lng={:coninfo.lng}";
+      });
+      $('.favTopic').click(function(){
+        var url="process.php?rsvp="+$(this).attr('id');
+        $.get(url,function(data){},"json");
+        $(this).fadeOut(200,function(){
+          $(this).text("plan to go");
+          $(this).unbind('click');
+        });
+        $(this).fadeIn(200);
+      });
+    });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- IF loginInfo.uid > "0" -->
+        <!-- INCLUDE _left_profile.html -->
+      <!-- ENDIF -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child <!-- IF postType == "allconcerts" --> active<!-- ENDIF -->" href="index.php?list=allconcerts">
+              all upcomming lives<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+          <li>
+            <a class="last-child<!-- IF postType == "likedconcerts" --> active<!-- ENDIF -->" href="index.php?list=likedconcerts">
+              lives I like<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_sponsor.html -->
+      <!-- INCLUDE _left_ad.html -->
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2>{:coninfo.conname}</h2>
+        </div>
+      </div>
+      <ol class="user-items">
+        <li class="user-item" id="item">
+          <div class="stream-content">
+            <p class="item-message">Type:{:coninfo.type}<br>Performed by {:coninfo.aname}<br>Hold at {:coninfo.venuename}, {:coninfo.concertdate}</p>
+            <div class="stream-item-footer">
+              <div class="item-actions">
+                <a class="favTopic" id="{:coninfo.conid}"><span class="web-icon icon-fav"></span>RSVP</a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="user-item" id="item">
+          <div class="stream-content">
+            <a class="item-message" id="openmap">Location on map</a>
+            <div id="map-canvas"></div>
+            <div class="stream-item-footer">
+              <span class="point">•</span>
+                <a>From Google Maps</a>
+              <span class="point">•</span>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <!-- IF FALSE -->
+      <!-- ENDIF -->
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+.uploadify {
+	position:absolute;
+}
+.uploadify *:focus{
+	outline:none;
+}
+.uploadify-button:before {
+    cursor:pointer;
+    content:"\f027";
+    font-size:21px;
+    color:#666;
+}
+.uploadify:hover .uploadify-button:before {
+	color:#333;
+}
+.uploadify-button.disabled:before,.uploadify:hover .uploadify-button.disabled:before {
+	color:#CCC;
+}
+.uploadify-queue {
+	position:absolute;
+	z-index:2;
+}
+.uploadify-queue-item {
+	border:1px solid #DDDDDD;
+	background-color:#EEEEEE;
+	border-radius:3px;
+	font:11px Verdana, Geneva, sans-serif;
+	width:150px;
+	padding:0 8px;
+	margin-top:1px;
+	height:28px;
+}
+.uploadify-error {
+	background-color: #FDE5DD !important;
+	border-color:#FFCCCC;
+}
+.uploadify-queue-item span{
+	font-size:11px;
+	height:15px;
+	line-height:15px;
+	display:inline-block;
+	margin-right:5px;
+	overflow:hidden;
+}
+.uploadify-queue-item .cancel a{
+	position:absolute;
+	text-indent:-999px;
+	height:12px;
+	width:12px;
+	right:8px;
+	top:10px;
+	background:url('uploadify-cancel.png');
+	background-size:12px 12px;
+	opacity:0.3;
+}
+.uploadify-queue-item .cancel a:hover{
+	opacity:0.6;
+}
+.uploadify-queue-item .uploadify-queue-info{
+	position:absolute;
+	z-index:3;
+	top:8px;
+	font-size:11px;
+	line-height:16px;
+	text-align:center;
+	width:130px;
+	color:#AAA;
+}
+.uploadify-queue-item.completed{
+	background-color:#E5E5E5;
+}
+.uploadify-progress{
+	background-color:#E5E5E5;
+	margin-top:6px;
+	width:130px;
+}
+.uploadify-progress-bar{
+	background-color:#CCCCCC;
+	height:16px;
+	width:1px;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>我的提醒<!-- IF notificationNumber > "0" -->（{:notificationNumber}）<!-- ENDIF --> - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.image.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js?20140612"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $(".stream-items .stream-item .stream-content").click(quickReply);
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _left_profile.html -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child<!-- IF notifyStatus == "" --> active<!-- ENDIF -->" href="notification.php">全部<i class="web-icon chev-right"></i></a>
+          </li>
+          <li>
+            <a class="last-child<!-- IF notifyStatus == "0" --> active<!-- ENDIF -->" href="notification.php?status=unread">未读<i class="web-icon chev-right"></i></a>
+          </li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2><!-- IF notifyStatus == "" -->我的<!-- ELSEIF notifyStatus == "0" -->未读<!-- ENDIF -->提醒</h2>
+        </div>
+      </div>
+      <ol class="stream-items">
+        <!-- BEGIN notificationList.list -->
+        <li class="stream-item" id="item-{:nid}">
+          <div class="stream-content" data="{:nickname}@{:tid}">
+            <a href="user.php?id={:uid}" class="item-user"><img class="item-avatar" src="{:avatar}" alt="{:nickname}"><strong class="item-nickname">{:nickname}</strong></a>
+            <small class="time<!-- IF isread == "0" --> unread<!-- ENDIF -->">
+            <!-- IF tid > "0" --><a href="t.php?id={:tid}<!-- IF pid > "0" -->#reply{:pid}<!-- ENDIF -->">{:posttime}</a><!-- ELSE -->{:posttime}<!-- ENDIF -->
+            </small>
+            <p class="item-message">{:message}</p>
+            <!-- IF smallimg != "" -->
+            <div class="item-picture">
+              <img src="{:smallimg}" data-expand="{:bigimage}" alt="" title="">
+            </div>
+            <!-- ENDIF -->
+            <div class="stream-item-footer">
+              <div class="item-actions">
+                <a onclick="deleteNotification({:nid});" id="deleteNotification-{:nid}"><span class="web-icon icon-trash"></span>删除</a>
+              </div>
+              <!-- IF tid > "0" -->
+                <a href="t.php?id={:tid}<!-- IF pid > "0" -->#reply{:pid}<!-- ENDIF -->"><span class="web-icon icon-public"></span>公开</a>
+              <!-- ENDIF -->
+            </div>
+          </div>
+        </li>
+        <!-- END -->
+      </ol>
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <!-- IF notificationList.page.Total > "1" -->
+            <!-- IF notifyStatus == "0" -->
+              <a href="javascript:;" onclick="location.href=location.href;">更早的未读提醒</a>
+            <!-- ELSE -->
+              <!-- IF notificationList.page.Prev != "" -->
+                <a href="{:notificationList.page.Prefix}{:notificationList.page.Prev}">上一页</a>
+                <!-- IF notificationList.page.Next != "" -->
+                  <span class="pagination">{:notificationList.page.Current} / {:notificationList.page.Total}</span>
+                <!-- ENDIF -->
+              <!-- ENDIF -->
+              <!-- IF notificationList.page.Next != "" -->
+                <a href="{:notificationList.page.Prefix}{:notificationList.page.Next}">下一页</a>
+              <!-- ENDIF -->
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF notificationList.count > "0" -->已加载全部提醒<!-- ELSE -->暂无提醒<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

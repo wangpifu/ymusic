@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, height=device-height, user-scalable=no" name="viewport">
+  <title>{:mb_substr:topicInfo.message,30} - {:topicInfo.clubname} - {:PHPSayConfig.sitename}</title>
+  <meta name="description" content="{:mb_substr:topicInfo.message,150}" />
+  <meta name="keywords" content="{:topicInfo.nickname}, {:topicInfo.clubname}, {:PHPSayConfig.sitename}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="mobile_static/flat.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="mobile_static/mobile.js"></script>
+  <script type="text/javascript">$(document).ready(function(){topicReadyLoad({:loginInfo.uid});});</script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE mobile_header.html -->
+  <div id="wrapper">
+    <div class="content">
+      <div class="box">
+        <div class="cell">
+          <div class="navigation">
+            <a href="./">首页</a>
+            <span class="chevron">›</span>
+            <a href="./?cid={:topicInfo.cid}">{:topicInfo.clubname}</a>
+          </div>
+          <!-- IF loginInfo.uid > "0" --><a href="./balance.php" class="member-balance"><span class="icon-money"></span>{:memberBalance}</a><!-- ENDIF -->
+        </div>
+        <div class="cell">
+          <div class="item">
+            <div class="item-avatar">
+              <a href="user.php?id={:topicInfo.uid}"><img src="{:topicInfo.avatar}"></a>
+            </div>
+            <div class="item-nickname">
+              <a href="user.php?id={:topicInfo.uid}">{:topicInfo.nickname}</a>
+            </div>
+            <div class="item-message">
+              {:topicInfo.message}
+            </div>
+            <!-- IF topicInfo.smallimg != "" -->
+            <div class="item-image">
+              <img src="{:topicInfo.smallimg}" rel="{:topicInfo.bigimage}">
+            </div>
+            <!-- ENDIF -->
+            <div class="item-info">
+              <span class="time">{:topicInfo.posttime}</span>
+              <!-- IF loginInfo.uid > "0" -->
+                <div class="action">
+                  <!-- IF loginInfo.group > "1" -->
+                    <a onclick="deleteTopic({:topicInfo.tid},{:topicInfo.cid});" class="delete">删除</a>
+                  <!-- ENDIF -->
+                  <a onclick="replyAt('{:topicInfo.nickname}');" class="reply">回复</a>
+                  <!-- IF favoriteId != "" -->
+                    <a id="topicFav" class="favorited" onclick="unFavoriteTopic({:topicInfo.tid})">收藏</a>
+                  <!-- ELSE -->
+                    <a id="topicFav" class="favorite" onclick="favoriteTopic({:topicInfo.tid})">收藏</a>
+                  <!-- ENDIF -->
+                </div>
+              <!-- ENDIF -->
+            </div>
+          </div>
+        </div>
+        <!-- IF loginInfo.uid > "0" -->
+        <div class="inner" id="reply-topic">
+          <div class="loading"></div>
+          <form method="post" id="reply-topic-form">
+            <div class="input-body">
+              <textarea maxlength="200" name="message" rows="3"></textarea>
+            </div>
+            <input type="hidden" name="tid" value="{:topicInfo.tid}">
+            <input class="submit-button" type="submit" value="发表回复">
+          </form>
+        </div>
+        <!-- ENDIF -->
+      </div>
+      <div class="sep5"></div>
+      <div class="box">
+        <!-- BEGIN replyList.list -->
+        <div class="cell" id="reply-{:pid}">
+          <div class="item">
+            <div class="item-avatar">
+              <a href="user.php?id={:uid}"><img src="{:avatar}"></a>
+            </div>
+            <div class="item-nickname">
+              <a href="user.php?id={:uid}">{:nickname}</a>
+            </div>
+            <div class="item-message">
+              {:message}
+            </div>
+            <!-- IF smallimg != "" -->
+            <div class="item-image">
+              <img src="{:smallimg}" rel="{:bigimage}">
+            </div>
+            <!-- ENDIF -->
+            <div class="item-info">
+              <span class="time">{:posttime}</span>
+              <!-- IF top.loginInfo.uid > "0" -->
+              <div class="action">
+                <!-- IF top.loginInfo.group > "1" -->
+                  <a onclick="deleteReply({:pid});" class="delete">删除</a>
+                <!-- ENDIF -->
+                <!-- IF top.loginInfo.uid != uid -->
+                  <a onclick="replyAt('{:nickname}');" class="reply">回复</a>
+                  <a class="like" data="{:pid}">{:likes}</a>
+                <!-- ENDIF -->
+              </div>
+              <!-- ENDIF -->
+            </div>
+          </div>
+        </div>
+        <!-- END -->
+        <div class="inner">
+          <!-- IF replyList.page.Total > "1" -->
+            <!-- IF replyList.page.Prev != "" -->
+            <a href="{:replyList.page.Prefix}{:replyList.page.Prev}" class="page prev">上一页</a>
+            <!-- ENDIF -->
+            <!-- IF replyList.page.Next != "" -->
+            <a href="{:replyList.page.Prefix}{:replyList.page.Next}" class="page next">下一页</a>
+            <!-- ENDIF -->
+            <strong>{:replyList.page.Current} / {:replyList.page.Total}</strong>
+          <!-- ELSE -->
+            <strong><!-- IF replyList.count > "0" -->已加载全部回复<!-- ELSE -->暂无回复<!-- ENDIF --></strong>
+          <!-- ENDIF -->
+        </div>        
+      </div>
+    </div>
+  </div>
+  <!-- INCLUDE mobile_footer.html -->
+</body>
+</html>

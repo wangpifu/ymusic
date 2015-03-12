@@ -1,0 +1,29 @@
+<form action="" method="get"> 
+choose your favorite music type<br /><br /> 
+<!-- BEGIN mtypes -->
+<label><input name="music" type="checkbox" value="{:0}" />{:0}</label> 
+<!-- END -->
+<br>
+<input id="typelike" type="submit" onclick="window.close()"  value="like"/>
+</form> 
+
+<script type="text/javascript">
+$('#joinform').ajaxForm( { beforeSubmit:beforeJoinForm, success:joinFormResponse, dataType:'json', type:'POST', url:'user.php?do=type' } );
+function beforeLoginForm(formData, jqForm, options)
+{
+
+	return true;
+}
+function loginFormResponse(data, statusText, xhr, $form)
+{
+	if (statusText == "success")
+	{
+		if (data.result == "success" || data.result == "login")
+		{
+			location.href = location.href;
+
+			return false;
+		}
+	}	
+}
+</script>

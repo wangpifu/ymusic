@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>会员管理 - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <script type="text/javascript" src="static/phpsay.admin.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $(".stream-items .stream-item .stream-content").click(function(ev){
+      if ( checkIsGoOn(ev) ){
+        window.open($(this).children(".item-user").attr("href"),"PHPSayUser");
+      }
+    });
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _admin_left_navigation.html -->    
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2>{:memberList.count} 位会员</h2>
+        </div>
+      </div>
+      <ol class="stream-items">
+        <!-- BEGIN memberList.list -->
+        <li class="stream-item">
+          <div class="stream-content">
+            <a href="user.php?id={:uid}" class="item-user"><img class="item-avatar" src="{:avatar}" alt="{:nickname}"><strong class="item-nickname">{:nickname}</strong></a>
+            <small class="time">社区币：{:balance}</small>
+            <p class="item-message">
+              <span class="web-icon icon-group{:groupid}"></span>
+              <!-- IF qqid !="" --><span class="icon-qq" title="QQ互联"></span><!-- ENDIF -->
+              <!-- IF password !="" --><span class="web-icon icon-password" title="已设置密码"></span><!-- ENDIF -->
+              <!-- IF email !="" --><br>邮箱地址：<a href="mailto:{:email}">{:email}</a><!-- ENDIF -->
+              <br>注册时间：{:regtime}
+              <!-- IF logintime !="" --><br>最后登录：{:logintime}<!-- ENDIF -->
+              <!-- IF topictime !="" --><br>最后主题：<a href="user.php?id={:uid}" target="_blank">{:topictime}</a><!-- ENDIF -->
+              <!-- IF replytime !="" --><br>最后回复：<a href="user.php?id={:uid}&list=reply" target="_blank">{:replytime}</a><!-- ENDIF -->
+            </p>
+          </div>
+        </li>
+        <!-- END -->
+      </ol>
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <!-- IF memberList.page.Total > "1" -->
+            <!-- IF memberList.page.Prev != "" -->
+            <a href="{:memberList.page.Prefix}{:memberList.page.Prev}">上一页</a>
+            <!-- IF memberList.page.Next != "" -->
+            <span class="pagination">{:memberList.page.Current} / {:memberList.page.Total}</span>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <!-- IF memberList.page.Next != "" -->
+            <a href="{:memberList.page.Prefix}{:memberList.page.Next}">下一页</a>
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF memberList.count > "0" -->已加载全部会员<!-- ELSE -->暂无提醒<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

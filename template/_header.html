@@ -1,0 +1,66 @@
+<!-- IF loginInfo.uid > "0" -->
+<div class="header web-bg">
+  <div class="top-nav">
+    <ul class="left-nav">
+      <li>
+        <a<!-- IF headerNavi == "home" --> class="home"<!-- ENDIF --> title="browse" href="./"><span class="web-icon nav-home"></span>lives</a>
+      </li>
+      <li>
+        <a<!-- IF headerNavi == "at" --> class="home"<!-- ENDIF --> title="feeds" href="./feeds.php"><span class="web-icon nav-at"></span>feeds</a>
+      </li>
+      <li>
+        <a<!-- IF headerNavi == "me" --> class="home"<!-- ENDIF --> title="me" href="./user.php"><span class="web-icon nav-me"></span>me</a>
+      </li>
+    </ul>
+    <div class="right-nav">
+      <div class="search">
+        <form method="get" action="search.php" onsubmit="return searchPHPSay();">
+          <input id="search-query" class="search-input" type="text" spellcheck="false" autocomplete="off" name="q" placeholder="搜索">
+          <span class="search-icon">
+            <button class="web-icon nav-search" type="submit" tabindex="-1"></button>
+          </span>
+          <input id="search-query-hint" class="search-input search-hinting-input" type="text" spellcheck="false" autocomplete="off" disabled="disabled">
+        </form>
+      </div>
+      <div class="settings">
+        <a id="settings"<!-- IF headerNavi == "settings" --> class="home"<!-- ENDIF --> title="setting" href="./settings.php"><span class="web-icon nav-settings"></span></a>
+        <div class="dropdown-menu">
+          <div class="arrow-top"></div>
+          <ul>
+            <li><a href="./settings.php">avator</a></li>
+            <li><a href="./settings.php?with=email">email</a></li>
+            <li><a href="./settings.php?with=password">password</a></li>
+            <li class="logout"><a href="./passport.php?do=logout">logout</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="web-bg write">
+        <a class="web-bg write-btn" title="post" href="#write"><i class="web-icon nav-write"></i></a>
+      </div>
+      <script>rightNavBind();</script>
+    </div>
+  </div>
+</div>
+<!-- ELSE -->
+<div class="header web-bg">
+  <div class="top-nav">
+    <ul class="left-nav">
+      <li><a title="{:PHPSayConfig.sitename}" href="./"><span class="web-icon nav-home"></span>{:PHPSayConfig.sitename}</a></li>
+    </ul>
+    <div class="right-nav">
+      <div class="search">
+        <form method="get" action="search.php" onsubmit="return searchPHPSay();">
+          <input id="search-query" class="search-input" type="text" spellcheck="false" autocomplete="off" name="q" placeholder="搜索">
+          <span class="search-icon">
+            <button class="web-icon nav-search" type="submit" tabindex="-1"></button>
+          </span>
+          <input id="search-query-hint" class="search-input search-hinting-input" type="text" spellcheck="false" autocomplete="off" disabled="disabled">
+        </form>
+      </div>
+      <div class="signin">
+        <a onclick="goSignIn();"><small>have membership?</small>login</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ENDIF -->

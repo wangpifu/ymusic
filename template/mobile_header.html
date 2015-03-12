@@ -1,0 +1,12 @@
+<div class="header">
+  <div class="logo"><a href="./"></a></div>
+  <div class="navi">
+    <!-- IF loginInfo.uid > "0" -->
+      <a class="user" href="user.php"><img src="{:loginInfo.avatar}"></a>
+      <a class="setting" href="settings.php"></a>
+      <a class="logout" href="passport.php?do=logout"></a>
+    <!-- ELSE -->
+      <a class="login" href="passport.php">登录</a>
+    <!-- ENDIF -->
+  </div>
+</div>

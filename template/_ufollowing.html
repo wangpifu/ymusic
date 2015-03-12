@@ -1,0 +1,52 @@
+<div id="typeshow">
+<!-- BEGIN ufollowing -->
+<li class="user-item" id="item">
+  <div class="stream-content">
+    <p class="item-message">{:uname}</p>
+    <div class="stream-item-footer">
+    <span class="point">•</span>
+      <span class="point">followed at</span>
+      <a>{:followtime}</a>
+    <span class="point">•</span>
+    </div>
+  </div>
+</li>
+<!-- END -->
+</div>
+<!-- IF userInfo.uid == loginInfo.uid -->
+<li class="user-item" id="item">
+<div class="stream-content">
+  <ul>
+    <a id="explore">explore more </a>
+        <div id="typelist" class="stream-content">
+            <form id="addtype" > 
+            <!-- BEGIN user -->
+            <input name="{:uid}" type="checkbox">{:uname}
+            <!-- END -->
+            <input type="submit" value="like" class="btn">
+            </form> 
+        </div>
+    </ul>
+    <div id="one" style="height: 200px; width: 500px; background-color: white;">
+    </div>
+</div>
+</li>
+<!-- ENDIF -->
+<style>
+#typelist{
+  display:none;
+}
+</style>
+<script type="text/javascript">
+    function showadd()
+    {
+      $('#typelist').show();
+      $('#typeshow').hide();
+    }
+    function beforeLoginForm(formData, jqForm, options){return true;}
+    function loginFormResponse(data, statusText, xhr, $form){location.href = location.href;}
+    $(document).ready(function() {
+        $('#explore').click(showadd);
+        $('#addtype').ajaxForm( { beforeSubmit:beforeLoginForm, success:loginFormResponse, dataType:'json', type:'POST', url:'process.php?do=addartist' } );
+    });
+</script>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Ymusic</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.image.js"></script>
+  <script type="text/javascript" src="static/jquery.form.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js?20140612"></script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- IF userInfo.uid == loginInfo.uid -->
+      <div class="mini-profile">
+        <div class="profile-summary">
+          <div class="profile-content">
+            <img src="{:loginInfo.avatar}"><b>{:loginInfo.nickname}</b><small>No.<em>{:userInfo.uid}</em> member</small>
+          </div>
+        </div>
+        <div class="profile-bottom">
+          <a href="user.php?list=afollowing" class="notify-count"><strong><?php echo count($_obj["afollowing"]);?></strong>bands following</a>
+          <a href="user.php?list=ufollowing" class="favorite-count"><strong><?php echo count($_obj["ufollowing"]);?></strong>guys following</a>
+          <a class="balance-count" href="user.php?list=type">
+              <strong><?php echo count($_obj['userInfo']["type"]);?></strong>music tastes<br><br></a>
+        </div>
+      </div>
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+          </li>
+        </ul>
+      </div>
+      <!-- ELSE -->
+      <div class="mini-profile">
+        <div class="profile-summary">
+          <div class="profile-content">
+            <img src="{:userInfo.avatar}">
+            <b>{:userInfo.nickname}</b>
+            <!-- IF loginInfo.group > "1" -->
+            <!-- IF userInfo.groupid < "2" -->
+            <a class="web-icon block<!-- IF userInfo.groupid == "0" --> blocked<!-- ENDIF -->" href="javascript:;" onclick="blockUser({:userInfo.uid});"></a>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <small>第<em>{:userInfo.uid}</em>位会员</small>
+          </div>
+          <div class="profile-action">
+          </div>
+        </div>
+        <div class="profile-bottom">
+          <span class="join-time"><strong>{:date:userInfo.regtime}</strong>注册</span>
+          <span class="login-time"><strong>{:date:userInfo.logintime}</strong>最后登录</span>
+        </div>
+      </div>
+      <!-- ENDIF -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child<!-- IF postType == "type" --> active<!-- ENDIF -->" href="user.php?list=type">
+              music tastes<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+          <li>
+            <a class="<!-- IF postType == "recommend" --> active<!-- ENDIF -->" href="user.php<!-- IF userInfo.uid != loginInfo.uid -->?id={:userInfo.uid}<!-- ENDIF -->">
+              <!-- IF userInfo.uid == loginInfo.uid -->my <!-- ELSE -->{:userInfo.nickname}'s <!-- ENDIF -->recommend lists<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+          <li>
+            <a class="last-child<!-- IF postType == "history" --> active<!-- ENDIF -->" href="user.php?list=history<!-- IF userInfo.uid != loginInfo.uid -->&id={:userInfo.uid}<!-- ENDIF -->">
+              live <!-- IF userInfo.uid == loginInfo.uid -->I <!-- ELSE -->{:userInfo.nickname} <!-- ENDIF -->went<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2>
+          <!-- IF userInfo.utype == "user" -->
+            <!-- IF postType == "recommend" -->
+              <!-- IF userInfo.uid == loginInfo.uid -->my <!-- ELSE -->{:userInfo.nickname}'s <!-- ENDIF -->recommend lists
+            <!-- ELSEIF postType == "history" -->
+              live <!-- IF userInfo.uid == loginInfo.uid -->I <!-- ELSE -->{:userInfo.nickname} <!-- ENDIF -->went
+            <!-- ELSEIF postType == "ufollowing" -->
+              guys <!-- IF userInfo.uid == loginInfo.uid -->I'm <!-- ELSE -->{:userInfo.nickname}'s <!-- ENDIF -->following
+            <!-- ELSEIF postType == "afollowing" -->
+              bands <!-- IF userInfo.uid == loginInfo.uid -->I'm <!-- ELSE -->{:userInfo.nickname}'s <!-- ENDIF -->following
+            <!-- ELSEIF postType == "type" -->
+              music types <!-- IF userInfo.uid == loginInfo.uid -->I like<!-- ELSE -->{:userInfo.nickname} likes<!-- ENDIF -->
+            <!-- ENDIF -->
+          <!-- ELSE -->
+          <!-- ENDIF -->
+          </h2>
+        </div>
+      </div>
+      <ol class="user-items">
+        <!-- IF postType == "recommend" -->
+          <!-- INCLUDE _recommendlists.html -->
+        <!-- ELSEIF postType == "history" -->
+          <!-- INCLUDE _history.html -->
+        <!-- ELSEIF postType == "ufollowing" -->
+          <!-- INCLUDE _ufollowing.html -->
+        <!-- ELSEIF postType == "afollowing" -->
+          <!-- INCLUDE _afollowing.html -->
+        <!-- ELSEIF postType == "type" -->
+          <!-- INCLUDE _types.html -->
+        <!-- ENDIF -->
+      </ol>
+      <!-- IF postType == "shit" -->
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <!-- IF postList.page.Total > "1" -->
+            <!-- IF postList.page.Prev != "" -->
+            <a href="{:postList.page.Prefix}{:postList.page.Prev}">上一页</a>
+            <!-- IF postList.page.Next != "" -->
+            <span class="pagination">{:postList.page.Current} / {:postList.page.Total}</span>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <!-- IF postList.page.Next != "" -->
+            <a href="{:postList.page.Prefix}{:postList.page.Next}">下一页</a>
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF postList.count > "0" -->已加载全部数据<!-- ELSE -->暂无数据<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+      <!-- ENDIF -->
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

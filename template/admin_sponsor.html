@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>广告管理 - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.dragsort.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <script type="text/javascript" src="static/phpsay.admin.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $("#sponsorSetting input").keyup(checkSponsorInput);
+    $("#sponsorSetting").submit(buySponsor);
+    $(".sponsor-items").dragsort({ dragSelector: "li", dragBetween: true, dragEnd: saveSponsorOrder });
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _admin_left_navigation.html -->
+      <!-- INCLUDE _left_sponsor.html -->
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <form id="sponsorSetting" name="sponsorSetting" method="post">
+        <div class="content-header">
+          <div class="header-inner"><h2>链接管理</h2></div>
+        </div>
+        <div class="setting-profile">
+          <div class="setting-inner">
+            <fieldset class="control-group">
+              <label class="control-label" for="linkText">链接文字</label>
+              <div class="controls">
+                <input type="text" name="linkText" id="linkText" maxlength="32" autocomplete="off">
+              </div>
+            </fieldset>
+            <fieldset class="control-group">
+              <label class="control-label" for="linkURL">链接地址</label>
+              <div class="controls">
+                <input type="text" name="linkURL" id="linkURL" maxlength="255" autocomplete="off">
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="setting-footer">
+          <div class="setting-end-inner">
+            <input type="hidden" name="linkId" value="0" autocomplete="off">
+            <button type="submit" class="setting-button" disabled="disabled">保存添加</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2>全部链接</h2>
+        </div>
+      </div>
+      <ol class="user-items">
+        <!-- BEGIN sponsorAll -->
+          <li class="user-item">
+            <div class="stream-content">           
+              <div class="stream-item-footer">
+                <a href="{:link}" target="_blank" id="sponsor-{:sid}">{:text}</a>
+                <span class="point">•</span>
+                <!-- IF endtime == "0" -->
+                  <a href="javascript:;" onclick="lineSponsor({:sid},1);">上线</a>
+                <!-- ELSE -->
+                  <a href="javascript:;" onclick="lineSponsor({:sid},0);">下线</a>
+                <!-- ENDIF -->
+                <span class="point">•</span>
+                <a href="javascript:;" onclick="editSponsor({:sid});">修改</a>
+                <span class="point">•</span>
+                <a href="javascript:;" onclick="deleteSponsor({:sid});">删除</a>
+              </div>
+            </div>
+          </li>
+        <!-- END -->
+      </ol>
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <span class="pagination">共 {:sponsorAllCount} 个链接，线上 {:sponsorCount} 个链接</span>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

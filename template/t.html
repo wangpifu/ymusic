@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>{:mb_substr:topicInfo.message,30} - {:topicInfo.clubname} - {:PHPSayConfig.sitename}</title>
+  <meta name="description" content="{:mb_substr:topicInfo.message,150}" />
+  <meta name="keywords" content="{:topicInfo.nickname}, {:topicInfo.clubname}, {:PHPSayConfig.sitename}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css?v1" />
+  <link rel="stylesheet" type="text/css" media="screen" href="static/uploadify.css?v1" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.uploadify.min.js"></script>
+  <script type="text/javascript" src="static/jquery.image.js"></script>
+  <script type="text/javascript" src="static/jquery.focus.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <script type="text/javascript" src="static/phpsay.upload.js"></script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- IF loginInfo.uid > "0" -->
+        <!-- INCLUDE _left_profile.html -->
+      <!-- ENDIF -->
+      <!-- INCLUDE _left_club.html -->
+      <!-- INCLUDE _left_sponsor.html -->
+      <!-- INCLUDE _left_ad.html -->
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <div class="topic-content">
+            <div class="topic-user">
+              <a href="user.php?id={:topicInfo.uid}">
+                <img src="{:topicInfo.avatar}" class="avatar">
+                <strong class="nickname">{:topicInfo.nickname}</strong>
+              </a>
+            </div>
+            <p class="topic-message">{:topicInfo.message}</p>
+            <!-- IF topicInfo.smallimg != "" -->
+            <div class="topic-picture">
+              <img src="{:topicInfo.smallimg}" data-expand="{:topicInfo.bigimage}" alt="" title="">
+            </div>
+            <!-- ENDIF -->
+            <div class="topic-actions">
+              <a onclick="replyAt('{:topicInfo.nickname}');"><span class="web-icon icon-reply"></span>回复</a>
+              <!-- IF favoriteId != "" -->
+                <a onclick="unFavTopic({:topicInfo.tid});" id="favTopic-{:topicInfo.tid}" class="favorite"><span class="web-icon icon-fav"></span>已收藏</a>
+              <!-- ELSE -->
+                <a onclick="favTopic({:topicInfo.tid});" id="favTopic-{:topicInfo.tid}"><span class="web-icon icon-fav"></span>收藏</a>
+              <!-- ENDIF -->
+              <!-- IF loginInfo.group > "1" -->
+                <a onclick="sinkTopic({:topicInfo.tid});" id="sinkTopic-{:topicInfo.tid}"><span class="web-icon icon-sink"></span><!-- IF topicInfo.lasttime == "0" -->恢复<!-- ELSE -->下沉<!-- ENDIF --></a>
+                <div class="move-topic">
+                  <span class="web-icon icon-move"></span>移动
+                  <ul class="move-club" data="{:topicInfo.tid}">
+                  <!-- BEGIN clubList.list --><li data="{:cid}"<!-- IF top.topicInfo.cid == cid --> class="hidden"<!-- ENDIF -->>{:cname}</li><!-- END -->
+                  </ul>
+                </div>
+                <div class="trash-topic">
+                  <span class="web-icon icon-trash"></span>删除
+                  <ul class="trash-type">
+                    <li onclick="deleteTopic({:topicInfo.tid},{:topicInfo.cid});" id="deleteTopic-{:topicInfo.tid}">彻底删除</li>
+                    <!-- IF topicInfo.smallimg != "" -->
+                    <!-- IF topicInfo.message != "" -->
+                    <li onclick="deleteTopicPicture({:topicInfo.tid});" id="deleteTopicPicture-{:topicInfo.tid}">删除图片</li>
+                    <!-- ENDIF -->
+                    <!-- ENDIF -->
+                  </ul>
+                </div>
+                <script type="text/javascript">topicAction();</script>
+                <!-- ENDIF -->
+            </div>
+            <div class="topic-time">
+              {:topicInfo.posttime}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reply-form<!-- IF topicInfo.lasttime == "0" --> hidden<!-- ENDIF -->">
+        <div class="reply-inner">
+          <form id="reply-form" autocomplete="off">
+            <input type="hidden" name="tid" value="{:topicInfo.tid}">
+            <textarea class="input-body" name="message" rows="3"></textarea>
+            <div class="post-button-left">
+              <input type="file" name="picture" id="picture">
+            </div>
+            <div class="post-button-right">
+              <span class="text-counter">200</span>
+              <button class="submit-button" type="submit">
+                <span class="submit-button-text">回复</span>
+              </button>
+            </div>
+            <div class="clear"></div>
+          </form>
+          <script type="text/javascript">uploadPostPicture("reply");</script>
+        </div>
+      </div>
+      <ol class="reply-items">
+        <!-- INCLUDE _reply_item.html -->
+      </ol>      
+      <div class="topic-footer">
+        <div class="topic-end-inner">
+          <!-- IF replyList.page.Total > "1" -->
+            <!-- IF replyList.page.Prev != "" -->
+            <a href="{:replyList.page.Prefix}{:replyList.page.Prev}">上一页</a>
+            <!-- IF replyList.page.Next != "" -->
+            <span class="pagination">{:replyList.page.Current} / {:replyList.page.Total}</span>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <!-- IF replyList.page.Next != "" -->
+            <a href="{:replyList.page.Prefix}{:replyList.page.Next}">下一页</a>
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF replyList.count > "0" -->已加载全部回复<!-- ELSE -->暂无回复<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+  <script type="text/javascript">locationHash();</script>
+</body>
+</html>

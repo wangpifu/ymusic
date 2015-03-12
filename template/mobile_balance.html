@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, height=device-height, user-scalable=no" name="viewport">
+  <title>{:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="mobile_static/flat.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="mobile_static/mobile.js"></script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE mobile_header.html -->
+  <div id="wrapper">
+    <div class="content">
+      <div class="box">
+        <div class="cell">
+          <a class="tab" href="./user.php">主题</a>
+          <a class="tab" href="./user.php?list=reply">回复</a>
+          <a class="tab" href="./user.php?list=favorite">收藏</a>
+          <a class="tab<!-- IF balanceType == "" --> current<!-- ENDIF -->" href="./balance.php">账户</a>
+          <a class="tab<!-- IF balanceType == "0" --> current<!-- ENDIF -->" href="./balance.php?type=recharge">充值记录</a>
+        </div>
+        <div class="cell">
+          <h3>账户余额：{:memberBalance}</h3>
+        </div>
+        <!-- IF balanceType == "0" -->
+          <!-- BEGIN resultsList.list -->
+            <div class="cell">
+              <div class="item">
+                  <span class="item-column">{:dateline}</span>
+                  <span class="item-point">•</span>
+                  <span class="item-column">{:currency} {:amount} / 社区币 {:coin}</span>
+                  <span class="item-point">•</span>
+                  <span class="item-column">{:order_status:status}</span>
+              </div>
+            </div>
+          <!-- END -->
+        <!-- ELSE -->
+          <!-- BEGIN resultsList.list -->
+            <div class="cell">
+              <div class="item">
+                  <span class="item-column">{:dateline}</span>
+                  <span class="item-point">•</span>
+                  <span class="item-column">
+                  <!-- IF tid > "0" --><a href="./t.php?id={:tid}">{:balance_type:typeid}</a><!-- ELSE -->{:balance_type:typeid}<!-- ENDIF -->
+                  </span>
+                  <span class="item-point">•</span>
+                  <span class="item-column"><!-- IF amount >"0" -->收入 {:amount}<!-- ELSE -->支出 {:abs:amount}<!-- ENDIF --></span>
+                  <span class="item-point">•</span>
+                  <span class="item-column">余额 {:balance}</span>
+              </div>
+            </div>
+          <!-- END -->
+        <!-- ENDIF -->
+        <div class="inner">
+          <!-- IF resultsList.page.Total > "1" -->
+            <!-- IF resultsList.page.Prev != "" -->
+            <a href="{:resultsList.page.Prefix}{:resultsList.page.Prev}" class="page prev">上一页</a>
+            <!-- ENDIF -->
+            <!-- IF resultsList.page.Next != "" -->
+            <a href="{:resultsList.page.Prefix}{:resultsList.page.Next}" class="page next">下一页</a>
+            <!-- ENDIF -->
+            <strong>{:resultsList.page.Current} / {:resultsList.page.Total}</strong>
+          <!-- ELSE -->
+            <strong><!-- IF resultsList.count > "0" -->已加载全部数据<!-- ELSE -->暂无数据<!-- ENDIF --></strong>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- INCLUDE mobile_footer.html -->
+</body>
+</html>

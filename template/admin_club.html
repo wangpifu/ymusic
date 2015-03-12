@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>类目管理 - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <!-- IF clubType == "1" -->
+  <script type="text/javascript" src="static/jquery.dragsort.js"></script>
+  <!-- ENDIF -->
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <script type="text/javascript" src="static/phpsay.admin.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    <!-- IF clubType == "1" -->
+    $("input[name='clubName']").keyup(checkClubInput);
+    $("form[name='clubEdit']").submit(editClub);
+    $("form[name='clubEdit'] .trash").click(trashClub);
+    $("#clubList").dragsort({ dragSelector: "li", dragBetween: true, dragEnd: saveClubOrder });
+    <!-- ELSEIF clubType == "0" -->
+    $(".restore-icon").click(trashClub);
+    <!-- ENDIF -->
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _admin_left_navigation.html -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li><a class="first-child<!-- IF clubType == "1" --> active<!-- ENDIF -->" href="admin_club.php">社区类目<i class="web-icon chev-right"></i></a></li>
+          <li><a class="last-child<!-- IF clubType == "0" --> active<!-- ENDIF -->" href="admin_club.php?type=trash">类目回收站<i class="web-icon chev-right"></i></a></li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <!-- IF clubType == "1" -->
+      <div class="content">
+        <form id="clubEdit" name="clubEdit" method="post">
+          <div class="content-header">
+            <div class="header-inner"><h2>添加类目</h2></div>
+          </div>
+          <div class="setting-profile">
+            <div class="setting-inner">
+              <fieldset class="control-group">
+                <label class="control-label" for="clubName">类目名称</label>
+                <div class="controls" data="">
+                  <input type="hidden" name="clubId" value="0">
+                  <input type="text" name="clubName" id="clubName" value="" maxlength="16" autocomplete="off">
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="setting-footer">
+            <div class="setting-end-inner">
+              <button type="submit" class="setting-button" disabled="disabled">保存添加</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ul id="clubList">
+      <!-- BEGIN clubList -->
+        <li class="content">
+          <form id="clubEdit" name="clubEdit" method="post">
+            <div class="content-header">
+              <div class="header-inner">
+                <span class="web-icon trash" data="{:cid}"></span>
+              </div>
+            </div>
+            <div class="setting-profile">
+              <div class="setting-inner">
+                <fieldset class="control-group">
+                  <label class="control-label" for="clubName{:cid}">类目名称</label>
+                  <div class="controls" data="{:cname}">
+                    <input type="hidden" name="clubId" value="{:cid}">
+                    <input type="text" name="clubName" id="clubName{:cid}" value="{:cname}" maxlength="16" autocomplete="off">
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="setting-footer">
+              <div class="setting-end-inner">
+                <button type="submit" class="setting-button" disabled="disabled">保存更改</button>
+              </div>
+            </div>
+          </form>
+        </li>
+      <!-- END -->
+      </ul>
+    <!-- ELSEIF clubType == "0" -->
+      <div class="content">
+        <div class="content-header">
+          <div class="header-inner"><h2>回收站</h2></div>
+        </div>
+        <div class="content-footer">
+          <div class="content-end-inner">
+            <!-- IF clubList -->
+              <!-- BEGIN clubList -->
+                <span class="restore-icon" title="还原该类目" data="{:cid}">{:cname}</span>
+              <!-- END -->
+            <!-- ELSE -->
+              <div class="content-empty">暂无类目</div>
+            <!-- ENDIF -->
+          </div>
+        </div>
+      </div>
+    <!-- ENDIF -->
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

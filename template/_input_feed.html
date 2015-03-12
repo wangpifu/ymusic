@@ -1,0 +1,53 @@
+<div id='input' class="content-header">
+  <div class="header-inner">
+    <form id="inputbox">
+      <div>what's new?</div>
+      <div><input name="message" type="text"></div>
+      <div><input type="submit" value="post" class="btn"></div>
+    </form>
+  </div>
+</div>
+<style>
+#input{
+  display:none;
+}
+</style>
+<script type="text/javascript">
+  function switchpost()
+  {
+    $('#input').toggle();
+    if($('#post').text()=="post news"){
+       $('#post').text("cancel");
+    }else{
+       $('#post').text("post news");
+    }
+  }
+  function beforeLoginForm(formData, jqForm, options){return true;}
+  function loginFormResponse(data, statusText, xhr, $form){
+    var row="data";
+    var content="<li class='stream-item' id='item' value='"+eval(row+".uid")+"'><div class='stream-content'>"+
+                    "<a><img class='item-avatar'><strong class='item-nickname'>"+eval(row+".uname")+
+                    "</strong></a><small class='time'>"+eval(row+".twittertime")+
+                    "</small><p class='item-message'>"+eval(row+".message")+"</p>";
+    if(eval(row+".type")!="0")content+="<p class='item-message'>"+eval(row+".type")+"</p>";
+    content+="<div class='stream-item-footer'><div class='item-actions'>";
+    if(eval(row+".type")!="0")content+="<a class='favTopic' id='"+eval(row+".conid")+"'><span class='web-icon icon-fav'></span>RSVP</a>";
+    content+="</div></div></div></li>";
+    $('#feedslist').prepend(content);
+    $('.afavTopic').ready(function(){
+      $('.afavTopic').click(function(){
+        var url="process.php?rsvp="+$(this).attr('id');
+        $.get(url,function(data){},"json");
+        $(this).fadeOut(200,function(){
+          $(this).text("plan to go");
+          $(this).unbind('click');
+        });
+        $(this).fadeIn(200);
+      });
+    });
+  }
+  $(document).ready(function(){
+    $('#post').click(switchpost);
+    $('#inputbox').ajaxForm( { beforeSubmit:beforeLoginForm, success:loginFormResponse, dataType:'json', type:'POST', url:'process.php?do=post' } );
+  });
+</script>

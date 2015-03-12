@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, height=device-height, user-scalable=no" name="viewport">
+  <title>{:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="mobile_static/flat.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="mobile_static/mobile.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('.item-image img').click(imageZoom);
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE mobile_header.html -->
+  <div id="wrapper">
+    <div class="content">
+      <div class="box">
+        <div class="cell">
+          <div class="navigation">
+            <a href="./">首页</a>
+            <span class="chevron">›</span>
+            <a href="./notification.php">我的提醒</a>
+          </div>
+        </div>
+        <!-- BEGIN notificationList.list -->
+        <div class="cell" id="notify-{:nid}">
+          <div class="item">
+            <div class="item-avatar"><a href="user.php?id={:uid}"><img src="{:avatar}"></a></div>
+            <div class="item-nickname"><a href="user.php?id={:uid}">{:nickname}</a></div>
+            <div class="item-message">{:message}</div>
+            <!-- IF smallimg != "" -->
+            <div class="item-image"><img src="{:smallimg}" rel="{:bigimage}"></div>
+            <!-- ENDIF -->
+            <div class="item-info">
+              <span class="text">{:posttime}</span>
+              <!-- IF isread == "0" -->
+              <span class="point">•</span>
+              <span class="unread">未读</span>
+              <!-- ENDIF -->
+              <div class="action">
+                <a onclick="deleteNotify({:nid});" class="delete">删除</a>
+                <!-- IF tid > "0" -->
+                  <a href="t.php?id={:tid}<!-- IF pid > "0" -->#reply{:pid}<!-- ENDIF -->" class="reply">回复</a>
+                <!-- ELSE -->
+                  <a href="send_message.php?to={:urlencode:nickname}" class="reply">回复</a>
+                <!-- ENDIF -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END -->
+        <div class="inner">
+          <!-- IF notificationList.page.Total > "1" -->
+            <!-- IF notificationList.page.Prev != "" -->
+            <a href="{:notificationList.page.Prefix}{:notificationList.page.Prev}" class="page prev">上一页</a>
+            <!-- ENDIF -->
+            <!-- IF notificationList.page.Next != "" -->
+            <a href="{:notificationList.page.Prefix}{:notificationList.page.Next}" class="page next">下一页</a>
+            <!-- ENDIF -->
+            <strong>{:notificationList.page.Current} / {:notificationList.page.Total}</strong>
+          <!-- ELSE -->
+            <strong><!-- IF notificationList.count > "0" -->已加载全部提醒<!-- ELSE -->暂无提醒<!-- ENDIF --></strong>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- INCLUDE mobile_footer.html -->
+</body>
+</html>

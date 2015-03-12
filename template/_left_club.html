@@ -1,0 +1,9 @@
+<div class="bar-nav">
+  <ul class="nav-links">
+    <!-- BEGIN clubList.list -->
+    <li><a id="cid-{:cid}" href="./?cid={:cid}">{:cname}<i class="web-icon chev-right"></i></a></li>
+    <!-- END -->
+    <li><a id="cid-0" class="last-child" href="./">全部<i class="web-icon chev-right"></i></a></li>
+  </ul>
+</div>
+<script type="text/javascript">$(".nav-links li a:first").addClass("first-child");$("#cid-{:clubList.current.cid}").addClass("active");</script>

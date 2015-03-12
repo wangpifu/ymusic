@@ -1,0 +1,56 @@
+<div id="feedslist">
+<!-- IF postType == "allfeeds" -->
+<!-- BEGIN allfeeds -->
+<li class="stream-item" id="item" value="{:uid}">
+  <!-- IF utype == "user" --><div class="stream-content"><!-- ELSE --><div class="stream-content0"><!-- ENDIF -->
+    <a><img class="item-avatar"><strong class="item-nickname">{:uname}</strong></a>
+    <small class="time">{:twittertime}</small>
+    <p class="item-message">{:message}</p>
+    <!-- IF type == "0" --><!-- ELSE --><p class="item-message">{:type}</p><!-- ENDIF -->
+    <div class="stream-item-footer">
+      <div class="item-actions">
+      <!-- IF type == "0" --><!-- ELSE -->
+        <a class="favTopic" id="{:conid}"><span class="web-icon icon-fav"></span>RSVP</a>
+      <!-- ENDIF -->
+      </div>
+    </div>
+  </div>
+</li>
+<!-- END -->
+<!-- ELSEIF postType == "feeds" -->
+<!-- BEGIN feeds -->
+<li class="stream-item" id="item" value="{:uid}">
+  <!-- IF utype == "user" --><div class="stream-content"><!-- ELSE --><div class="stream-content0"><!-- ENDIF -->
+    <a><img class="item-avatar"><strong class="item-nickname">{:uname}</strong></a>
+    <small class="time">{:twittertime}</small>
+    <p class="item-message">{:message}</p>
+    <!-- IF type == "0" --><!-- ELSE --><p class="item-message">{:type}</p><!-- ENDIF -->
+    <div class="stream-item-footer">
+      <div class="item-actions">
+      <!-- IF type == "0" --><!-- ELSE -->
+        <a class="favTopic" id="{:conid}"><span class="web-icon icon-fav"></span>RSVP</a>
+      <!-- ENDIF -->
+      </div>
+    </div>
+  </div>
+</li>
+<!-- END -->
+<!-- ENDIF -->
+<style>
+.favTopic{
+  display:block;
+}
+</style>
+<script>
+$(document).ready(function(){
+    $('.favTopic').click(function(){
+      var url="process.php?rsvp="+$(this).attr('id');
+      $.get(url,function(data){},"json");
+      $(this).fadeOut(200,function(){
+        $(this).text("plan to go");
+        $(this).unbind('click');
+      });
+      $(this).fadeIn(200);
+  });
+});
+</script>

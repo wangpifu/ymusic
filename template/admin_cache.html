@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>更新模版缓存 - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <script type="text/javascript" src="static/phpsay.admin.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $("#cacheForm").submit(updateTemplateCache);
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _admin_left_navigation.html -->    
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <form id="cacheForm" name="cacheForm" method="post">
+        <div class="content-header">
+          <div class="header-inner"><h2>更新模版缓存</h2></div>
+        </div>
+        <div class="setting-footer">
+          <div class="setting-end-inner">
+            <button type="submit" class="setting-button">提交更新</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

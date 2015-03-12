@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>{:userInfo.nickname} - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.image.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js?20140612"></script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- IF userInfo.uid == loginInfo.uid -->
+      <div class="mini-profile">
+        <div class="profile-summary">
+          <div class="profile-content">
+            <img src="{:loginInfo.avatar}"><b>{:loginInfo.nickname}</b><small>第<em>{:userInfo.uid}</em>位会员</small>
+          </div>
+        </div>
+        <div class="profile-bottom">
+          <script type="text/javascript">showNotifications();</script>
+          <a href="javascript:;" onclick="notificationRequest();" class="notify-count"><strong>{:notificationNumber}</strong>提醒</a>
+          <a href="user.php?list=favorite" class="favorite-count"><strong>{:favoriteNumber}</strong>收藏</a>
+          <a href="balance.php" class="balance-count"><strong>{:memberBalance}</strong>社区币</a>
+        </div>
+      </div>
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child last-child<!-- IF postType == "systemrecommand" --> active<!-- ENDIF -->" href="concert.php?list=favorite">
+              system recommand<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- ELSE -->
+      <div class="mini-profile">
+        <div class="profile-summary">
+          <div class="profile-content">
+            <img src="{:userInfo.avatar}">
+            <b>{:userInfo.nickname}</b>
+            <!-- IF loginInfo.group > "1" -->
+            <!-- IF userInfo.groupid < "2" -->
+            <a class="web-icon block<!-- IF userInfo.groupid == "0" --> blocked<!-- ENDIF -->" href="javascript:;" onclick="blockUser({:userInfo.uid});"></a>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <small>第<em>{:userInfo.uid}</em>位会员</small>
+          </div>
+          <div class="profile-action">
+          </div>
+        </div>
+        <div class="profile-bottom">
+          <span class="join-time"><strong>{:date:userInfo.regtime}</strong>注册</span>
+          <span class="login-time"><strong>{:date:userInfo.logintime}</strong>最后登录</span>
+        </div>
+      </div>
+      <!-- ENDIF -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child<!-- IF postType == "postconcert" --> active<!-- ENDIF -->" href="concert.php<!-- IF userInfo.uid != loginInfo.uid -->?id={:userInfo.uid}<!-- ENDIF -->">
+              <!-- IF userInfo.uid == loginInfo.uid --><!-- ELSE -->{:userInfo.nickname}<!-- ENDIF -->posted concert<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+          <li>
+            <a class="last-child<!-- IF postType == "concertlike" --> active<!-- ENDIF -->" href="concert.php?list=reply<!-- IF userInfo.uid != loginInfo.uid -->&id={:userInfo.uid}<!-- ENDIF -->">
+              <!-- IF userInfo.uid == loginInfo.uid --><!-- ELSE -->{:userInfo.nickname}<!-- ENDIF -->concert want to go<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2>
+            <!-- IF postType == "postconcert" -->
+              <!-- IF userInfo.uid == loginInfo.uid -->concert<!-- ELSE -->{:userInfo.nickname}<!-- ENDIF -->concert you posted
+            <!-- ELSEIF postType == "concertlike" -->
+              <!-- IF userInfo.uid == loginInfo.uid -->concert<!-- ELSE -->{:userInfo.nickname}<!-- ENDIF -->concert want to go
+            <!-- ELSEIF postType == "systemrecommand" -->
+              system recommand
+            <!-- ENDIF -->
+          </h2>
+        </div>
+      </div>
+      <ol class="user-items">
+        <!-- IF postType == "topic" -->
+          <!-- BEGIN postList.list -->
+          <li class="user-item" id="item-{:tid}">
+            <div class="stream-content">
+              <p class="item-message">{:message}</p>
+              <!-- IF smallimg != "" -->
+              <div class="item-picture">
+                <img src="{:smallimg}" data-expand="{:bigimage}" alt="" title="">
+              </div>
+              <!-- ENDIF -->              
+              <div class="stream-item-footer">
+                <div class="item-actions">
+                  <a onclick="favTopic({:tid});" id="favTopic-{:tid}"><span class="web-icon icon-fav"></span>收藏</a>
+                  <!-- IF top.loginInfo.group > "1" -->
+                  <a onclick="deleteTopic({:tid},0);" id="deleteTopic-{:tid}"><span class="web-icon icon-trash"></span>删除</a>
+                  <!-- ENDIF -->
+                </div>
+                <a href="./?cid={:cid}">{:clubname}</a>
+                <span class="point">•</span>
+                <a href="./t.php?id={:tid}">{:posttime}</a>
+                <span class="point">•</span>
+                <a href="./t.php?id={:tid}"><!-- IF comments > "0" --><strong>{:comments}</strong> <!-- ELSE -->暂无<!-- ENDIF -->回复</a>
+              </div>
+            </div>
+          </li>
+          <!-- END -->
+        <!-- ELSEIF postType == "reply" -->
+          <!-- BEGIN postList.list -->
+          <li class="user-item" id="item-{:pid}">
+            <div class="stream-content">
+              <p class="item-message">{:message}</p>
+              <!-- IF smallimg != "" -->
+              <div class="item-picture">
+                <img src="{:smallimg}" data-expand="{:bigimage}" alt="" title="">
+              </div>
+              <!-- ENDIF -->
+              <div class="stream-item-footer">
+                <!-- IF top.loginInfo.group > "1" -->
+                <div class="item-actions">
+                  <a onclick="deleteReply({:pid});" id="deleteReply-{:pid}"><span class="web-icon icon-trash"></span>删除</a>
+                </div>
+                <!-- ENDIF -->
+                <a href="./t.php?id={:tid}#reply{:pid}">{:posttime}</a>
+              </div>
+            </div>
+          </li>
+          <!-- END -->
+        <!-- ELSEIF postType == "favorite" -->
+          <!-- BEGIN postList.list -->
+          <li class="user-item" id="item-{:tid}">
+            <div class="stream-content">
+              <p class="item-message">{:message}</p>
+              <!-- IF smallimg != "" -->
+              <div class="item-picture">
+                <img src="{:smallimg}" data-expand="{:bigimage}" alt="" title="">
+              </div>
+              <!-- ENDIF -->
+              <div class="stream-item-footer">
+                <div class="item-actions">
+                  <a onclick="unFavTopic({:tid});" id="favTopic-{:tid}" class="favorite"><span class="web-icon icon-fav"></span>已收藏</a>
+                </div>
+                <a href="user.php?id={:uid}">{:nickname}</a>
+                <span class="point">发布于</span>
+                <a href="./t.php?id={:tid}">{:posttime}</a>
+              </div>
+            </div>
+          </li>
+          <!-- END -->
+        <!-- ENDIF -->
+      </ol>
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <!-- IF postList.page.Total > "1" -->
+            <!-- IF postList.page.Prev != "" -->
+            <a href="{:postList.page.Prefix}{:postList.page.Prev}">上一页</a>
+            <!-- IF postList.page.Next != "" -->
+            <span class="pagination">{:postList.page.Current} / {:postList.page.Total}</span>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <!-- IF postList.page.Next != "" -->
+            <a href="{:postList.page.Prefix}{:postList.page.Next}">下一页</a>
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF postList.count > "0" -->已加载全部数据<!-- ELSE -->暂无数据<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

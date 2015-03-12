@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Ymusic</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css?v1" />
+  <link rel="stylesheet" type="text/css" media="screen" href="static/uploadify.css?v1" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.uploadify.min.js"></script>
+  <script type="text/javascript" src="static/jquery.image.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <script type="text/javascript" src="static/phpsay.upload.js"></script>
+  <script type="text/javascript" src="static/jquery.form.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    indexPageOnload({:loginInfo.uid});
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- IF loginInfo.uid > "0" -->
+        <!-- INCLUDE _left_profile.html -->
+      <!-- ENDIF -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child <!-- IF postType == "allfeeds" --> active<!-- ENDIF -->" href="feeds.php?list=allfeeds">
+              all feeds<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+          <li>
+            <a class="last-child<!-- IF postType == "feeds" --> active<!-- ENDIF -->" href="feeds.php?list=feeds">
+              feeds from my following<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_ad.html -->
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2>feeds</h2><br>
+          <a id="post">post news</a>
+          <a class="newest" title="最新" href="./new.php"><span class="web-icon icon-newest"></span></a>
+        </div>
+      </div>
+      <ol class="stream-items">
+        <!-- INCLUDE _input_feed.html -->
+        <!-- INCLUDE _feeds_item.html -->
+      </ol>
+      <!-- IF FALSE -->
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <!-- IF topicList.page.Total > "1" -->
+            <!-- IF topicList.page.Prev != "" -->
+            <a href="{:topicList.page.Prefix}{:topicList.page.Prev}">上一页</a>
+            <!-- IF topicList.page.Next != "" -->
+            <span class="pagination">{:topicList.page.Current} / {:topicList.page.Total}</span>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <!-- IF topicList.page.Next != "" -->
+            <a href="{:topicList.page.Prefix}{:topicList.page.Next}">下一页</a>
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF topicList.count > "0" -->已加载全部数据<!-- ELSE -->暂无数据<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+      <!-- ENDIF -->
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+  
+  <div id="writeTopic" class="writeTopic">
+    <div class="addtopic">
+      <div class="content-header">
+        <div class="header-inner">
+          <!-- IF clubList.current.cid > "0" -->
+          <h2>{:clubList.current.cname}</h2>
+          <!-- ELSE -->
+          <div class="select-box">
+            <div class="trigger" data-toggle="select" data-field="#cid"><i></i><span>请选择分类</span></div>
+            <div class="options">
+              <!-- BEGIN clubList.list --><a href="#" class="item" data-item="{:cid}">{:cname}</a><!-- END -->
+            </div>
+          </div>
+          <script type="text/javascript" src="static/jquery.select.js"></script>
+          <!-- ENDIF -->
+          <span class="close-write" id="close-write"></span>
+        </div>
+      </div>
+      <div class="content-post">
+        <div class="post-inner">
+          <form id="topic-form" autocomplete="off">
+            <input type="hidden" name="from" value="{:clubList.current.cid}">
+            <input type="hidden" name="cid" id="cid" value="{:clubList.current.cid}">
+            <textarea class="input-body" name="message" rows="5"></textarea>
+            <div class="post-button-left">
+              <input type="file" name="picture" id="picture">
+            </div>
+            <div class="post-button-right">
+              <span class="text-counter">200</span>
+              <button class="submit-button" type="submit">
+                <span class="submit-button-text">发布</span>
+              </button>
+            </div>
+            <div class="clear"></div>
+          </form>
+          <script type="text/javascript">uploadPostPicture("topic");</script>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title><!-- IF balanceType == "0" -->充值<!-- ELSE -->我的账户<!-- ENDIF --> - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <!-- IF balanceType == "0" -->
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $(".pay-online").click(rechargeOnline);
+  });
+  </script>
+  <!-- ENDIF -->
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _left_profile.html -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child<!-- IF balanceType == "" --> active<!-- ENDIF -->" href="balance.php">我的账户<i class="web-icon chev-right"></i></a>
+          </li>
+          <li>
+            <a class="last-child<!-- IF balanceType == "0" --> active<!-- ENDIF -->" href="balance.php?type=recharge">充值<i class="web-icon chev-right"></i></a>
+          </li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <!-- IF balanceType == "0" -->
+      <div class="content">
+        <div class="content-header">
+          <div class="header-inner"><h2>充值</h2></div>
+        </div>
+        <div class="content-footer">
+          <div class="content-end-inner">
+            <form id="checkout-form" method="post">
+              <input type="hidden" name="amount" value="">
+              <ul class="content-list">
+                <li>充值 <strong>¥1</strong> 获得 <strong>100</strong> 社区币<span class="pay-online" data="1">支付宝支付</span></li>
+                <li>充值 <strong>¥2</strong> 获得 <strong>200</strong> 社区币<span class="pay-online" data="2">支付宝支付</span></li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    <!-- ENDIF -->
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2><!-- IF balanceType == "0" -->充值记录<!-- ELSE -->我的账户<!-- ENDIF --></h2>
+        </div>
+      </div>
+      <ol class="user-items">
+        <!-- IF balanceType == "0" -->
+          <!-- BEGIN resultsList.list -->
+            <li class="user-item">
+              <div class="stream-content">           
+                <div class="stream-item-footer">
+                  {:dateline}
+                  <span class="point">•</span>
+                  {:platform}
+                  <span class="point">•</span>
+                  {:currency} {:amount}
+                  <span class="point">•</span>
+                  社区币 {:coin}
+                  <span class="point">•</span>
+                  <!-- IF status == "1" --><a href="pay_alipay.php?do=order&id={:id}">立即支付</a><!-- ELSE -->{:order_status:status}<!-- ENDIF -->
+                </div>
+              </div>
+            </li>
+          <!-- END -->
+        <!-- ELSE -->
+          <!-- BEGIN resultsList.list -->
+            <li class="user-item">
+              <div class="stream-content">           
+                <div class="stream-item-footer">
+                  {:dateline}
+                  <span class="point">•</span>
+                  <!-- IF tid > "0" --><a href="t.php?id={:tid}">{:balance_type:typeid}</a><!-- ELSE -->{:balance_type:typeid}<!-- ENDIF -->
+                  <span class="point">•</span>
+                  <!-- IF amount >"0" -->收入 {:amount}<!-- ELSE -->支出 {:abs:amount}<!-- ENDIF -->
+                  <span class="point">•</span>
+                  余额 {:balance}
+                </div>
+              </div>
+            </li>
+          <!-- END -->
+        <!-- ENDIF -->
+      </ol>
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <!-- IF resultsList.page.Total > "1" -->
+            <!-- IF resultsList.page.Prev != "" -->
+            <a href="{:resultsList.page.Prefix}{:resultsList.page.Prev}">上一页</a>
+            <!-- IF resultsList.page.Next != "" -->
+            <span class="pagination">{:resultsList.page.Current} / {:resultsList.page.Total}</span>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <!-- IF resultsList.page.Next != "" -->
+            <a href="{:resultsList.page.Prefix}{:resultsList.page.Next}">下一页</a>
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF resultsList.count > "0" -->已加载全部数据<!-- ELSE -->暂无数据<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

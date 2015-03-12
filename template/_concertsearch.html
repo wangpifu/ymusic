@@ -1,0 +1,67 @@
+<div id='searchblock' class="content-header">
+  <div class="header-inner">
+    <form id="searchbox">
+      <div>live name<input name="concert.conname" type="text">
+      band/artist name<input name="artist.aname" type="text"></div>
+      <div>music type<input name="concert.type" type="text">
+      location<input name="venue.venuename" type="text"></div>
+      <div>earliest date<input name="startdate" type="date">
+      latest date<input name="enddate" type="date"></div>
+      <div>price&lt;<input name="maxprice" type="text"></div>
+      <input type="submit" value="search" class="btn">
+    </form>
+  </div>
+</div>
+<style>
+.favTopic{
+  display:block;
+}
+#searchblock{
+  display:none;
+}
+</style>
+<script type="text/javascript">
+  function switchsearch()
+  {
+    $('#searchblock').toggle();
+    if($('#searchswitch').text()=="search"){
+       $('#searchswitch').text("close search");
+    }else{
+       $('#searchswitch').text("search");
+    }
+  }
+  function beforeLoginForm(formData, jqForm, options){return true;}
+  function loginFormResponse(data, statusText, xhr, $form){
+    $('#resultlist').empty();
+    for(i=0;i<data.len;i++){
+      var row="data.row"+i;
+      console.log(row+".conname");
+      var content="<li class='stream-item' id='"+eval(row+".conid")+"'><div class='stream-content'>"+
+      "<a><img class='item-avatar'><strong class='item-nickname'>"+
+      eval(row+".conname")+"</strong></a><small class='time'>hold at "+
+      eval(row+".venuename")+", "+eval(row+".concertdate")+
+      "</small><p class='item-message'>perform by "+
+      eval(row+".aname")+"</p><p class='item-message'>type: "+
+      eval(row+".mtype")+"</p><div class='stream-item-footer'><div class='item-actions'>"+
+      "<a class='afavTopic' id='"+eval(row+".conid")+"'><span class='web-icon icon-fav'>"+
+      "</span>RSVP</a></div></div></div></li>";
+      $('#resultlist').append(content);
+    }
+    $('.afavTopic').ready(function(){
+      $('.afavTopic').click(function(){
+        var url="process.php?rsvp="+$(this).attr('id');
+        $.get(url,function(data){},"json");
+        $(this).fadeOut(200,function(){
+          $(this).text("plan to go");
+          $(this).unbind('click');
+        });
+        $(this).fadeIn(200);
+      });
+    });
+  }
+  $(document).ready(function(){
+    $('#searchswitch').click(switchsearch);
+    $('#searchbox').ajaxForm( { beforeSubmit:beforeLoginForm, success:loginFormResponse, dataType:'json', type:'POST', url:'process.php?do=searchconcerts' } );
+    indexPageOnload({:loginInfo.uid});
+  });
+</script>

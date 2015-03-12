@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>{:PHPSayConfig.sitename} - Ymusic</title>
+	<meta name="description" content="ymusic,why not music"/>
+	<meta name="keywords" content="ymusic, {:PHPSayConfig.sitename}, login, signup" />
+	<link rel="stylesheet" type="text/css" media="screen" href="static/login.css?20" />
+	<script type="text/javascript" src="static/jquery.js"></script>
+	<script type="text/javascript" src="static/jquery.form.js"></script>
+	<script type="text/javascript" src="static/phpsay.login.js"></script>
+	<script type="text/javascript">
+	var connect = "{:connectArray.connect}";
+	</script>
+	<!-- INCLUDE _analytics.html -->
+</head>
+<body>
+	<div class="header">Ymusic</div>
+	<!-- IF connectArray.connect == "" -->
+	<div class="loginwindow hidden" id="loginSelect">
+		<div class="logintype">
+			<div class="artistlogin">
+				<div class="artisticon"></div>artist
+				<input type="hidden" name="artistclick" value="artistclick"> 
+			</div>
+			<div class="emaillogin">
+				<div class="emailicon"></div>user
+				<input type="hidden" name="userclick" value="userclick"> 
+			</div>
+		</div>
+		<div class="logintips">
+			Ymusic,why not music
+		</div>
+	</div>
+	<div class="connectwindow hidden" id="loginView">
+		<div class="closewindow" id="closesignin"></div>
+		<div class="title">Ymusic</div>
+		<form id="loginform">
+			<div class="connectform">
+				<div class="connectinput">
+					<div class="placeholder">nickname</div>
+					<input class="ipt iptlong" type="text" maxlength="36" spellcheck="false" value="" name="account" autocomplete="off">
+				</div>
+				<div class="connectinput" id="login-control">
+					<div class="placeholder">password</div>
+					<input class="ipt" type="password" maxlength="26" spellcheck="false" value="" name="password" autocomplete="off">
+					<input type="submit" value="" class="btn">
+				</div>
+			</div>
+			<input class="secret" type="text" value="" name="usertype">
+		</form>
+		<div class="connecttip" id="logintip">
+			<a href="./passport.php?do=password" class="forgot">if you forget password,click to find it</a>
+			<!-- IF PHPSayConfig.emailjoin -->
+			<a href="javascript:;" onclick="showSignupView();" class="signup">if you are not our member,click to signup</a>
+			<!-- ELSE -->
+			<!-- ENDIF -->
+		</div>
+	</div>
+	<div class="connectwindow hidden" id="signupView">
+		<div class="closewindow" id="closesignup"></div>
+		<div class="titlelow">Join Ymusic</div>
+		<form id="joinform">
+			<div class="connectform">
+				<div class="connectinput">
+					<div class="placeholder">email</div>
+					<input class="ipt iptlong" type="text" maxlength="36" spellcheck="false" value="" name="email" autocomplete="off">
+				</div>
+				<div class="connectinput">
+					<div class="placeholder">nickname</div>
+					<input class="ipt iptlong" type="text" maxlength="13" spellcheck="false" value="" name="nickname" autocomplete="off">
+				</div>				
+				<div class="connectinput" id="signup-control">
+					<div class="placeholder">password</div>
+					<input class="ipt" type="password" maxlength="26" spellcheck="false" value="" name="password" autocomplete="off">
+					<input type="submit" value="" class="btn">
+				</div>
+			</div>
+			<input class="secret" type="text" value="" name="usertype">
+		</form>
+	</div>
+	<!-- ELSE -->
+	<!-- ENDIF -->
+	<div class="footer">
+		<div class="links">
+			<a href="http://www.baidu.com" target="blank">whxwzy</a>
+			<span class="separator"></span>
+			Copyright &copy; 2014~2015 Ymusic. all reserved .
+		</div>
+	</div>
+</body>
+</html>

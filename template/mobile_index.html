@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, height=device-height, user-scalable=no" name="viewport">
+  <title>{:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="mobile_static/flat.css" />
+  <link rel="apple-touch-icon" href="mobile_static/apple-touch-icon.png" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="mobile_static/mobile.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('.item-image img').click(imageZoom);
+    <!-- IF loginInfo.uid > "0" -->setTimeout(updateMemberLogin,2000);<!-- ENDIF -->
+  });
+  </script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE mobile_header.html -->
+  <div id="wrapper">
+    <div class="content">
+      <div class="box">
+        <!-- IF loginInfo.uid > "0" -->
+        <div class="cell">
+          <div class="notification">
+          <!-- IF notificationNumber > "0" -->
+            <a href="notification.php" class="notify-highlight">{:notificationNumber} 条未读提醒</a>
+          <!-- ELSE -->
+            <span class="icon-notify"></span>
+            <a href="notification.php" class="notify">{:notificationNumber} 条未读提醒</a>
+          <!-- ENDIF -->
+          </div>
+          <div class="cright">
+            <a href="./balance.php" class="member-balance"><span class="icon-money"></span><span id="balance-count">{:memberBalance}</span></a>
+          </div>
+          <a class="add-topic" href="mobile_write.php?cid={:clubList.current.cid}">发布新消息</a>
+        </div>
+        <!-- ENDIF -->
+        <div class="cell">
+          <!-- BEGIN clubList.list -->
+          <a class="tab<!-- IF top.clubList.current.cid == cid --> current<!-- ENDIF -->" href="./?cid={:cid}">{:cname}</a>
+          <!-- END -->
+          <a class="tab<!-- IF clubList.current.cid == "0" --> current<!-- ENDIF -->" href="./">全部</a>
+        </div>
+        <!-- BEGIN topicList.list -->
+        <div class="cell">
+          <div class="item">
+            <div class="item-avatar">
+              <a href="user.php?id={:uid}"><img src="{:avatar}"></a>
+            </div>
+            <div class="item-nickname">
+              <a href="user.php?id={:uid}">{:nickname}</a>
+            </div>
+            <div class="item-message">
+              {:message}
+            </div>
+            <!-- IF smallimg != "" -->
+            <div class="item-image">
+              <img src="{:smallimg}" rel="{:bigimage}">
+            </div>
+            <!-- ENDIF -->
+            <div class="item-info">
+              <!-- IF top.clubList.current.cid == "0" -->
+              <a href="./?cid={:cid}">{:clubname}</a>
+              <span class="point">•</span>
+              <!-- ENDIF -->
+              <a href="t.php?id={:tid}">{:posttime}</a>
+              <span class="point">•</span>
+              <a href="t.php?id={:tid}" id="comment-{:tid}"><!-- IF comments > "0" --><strong>{:comments}</strong> <!-- ELSE -->暂无<!-- ENDIF -->回复</a>
+            </div>
+          </div>
+        </div>
+        <!-- END -->
+        <div class="inner">
+          <!-- IF topicList.page.Total > "1" -->
+            <!-- IF topicList.page.Prev != "" -->
+            <a href="{:topicList.page.Prefix}{:topicList.page.Prev}" class="page prev">上一页</a>
+            <!-- ENDIF -->
+            <!-- IF topicList.page.Next != "" -->
+            <a href="{:topicList.page.Prefix}{:topicList.page.Next}" class="page next">下一页</a>
+            <!-- ENDIF -->
+            <strong>{:topicList.page.Current} / {:topicList.page.Total}</strong>
+          <!-- ELSE -->
+            <strong><!-- IF topicList.count > "0" -->已加载全部数据<!-- ELSE -->暂无数据<!-- ENDIF --></strong>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- INCLUDE mobile_footer.html -->
+</body>
+</html>

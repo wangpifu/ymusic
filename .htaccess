@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+	RewriteCond %{http_host} ^phpsay.com [NC]
+	RewriteRule ^(.*)$ http://www.phpsay.com/$1 [L,R=301]
+	RewriteRule ^t-([0-9]+)$ t.php?id=$1
+</IfModule>
+
+<ifmodule mod_deflate.c>
+	AddOutputFilter DEFLATE html xml php js css
+</ifmodule>
+
+FileETag none

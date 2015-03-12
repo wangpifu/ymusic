@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>搜索 - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/jquery.image.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _left_profile.html -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li>
+            <a class="first-child<!-- IF searchType == "topic" --> active<!-- ENDIF -->" href="./search.php?q={:urlencode:searchWord}">
+              主题<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+          <li>
+            <a class="last-child<!-- IF searchType == "reply" --> active<!-- ENDIF -->" href="./search.php?q={:urlencode:searchWord}&t=reply">
+              回复<i class="web-icon chev-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <div class="header-inner">
+          <h2>搜索<!-- IF searchType == "topic" -->主题<!-- ELSEIF searchType == "reply" -->回复<!-- ENDIF -->：<span class="kword">{:searchWord}</span></h2>
+        </div>
+      </div>
+      <ol class="user-items">
+        <!-- BEGIN searchList.list -->
+          <li class="user-item" id="item-{:pid}">
+            <div class="stream-content">
+              <p class="item-message">{:message}</p>
+              <!-- IF smallimg != "" -->
+              <div class="item-picture">
+                <img src="{:smallimg}" data-expand="{:bigimage}" alt="" title="">
+              </div>
+              <!-- ENDIF -->
+              <div class="stream-item-footer">
+                <a href="./user.php?id={:uid}">{:nickname}</a>
+                <span class="point">发布于</span>               
+                <a href="./t.php?id={:tid}<!-- IF pid > "0" -->#reply{:pid}<!-- ENDIF -->">{:posttime}</a>
+              </div>
+            </div>
+          </li>
+        <!-- END -->
+      </ol>
+      <div class="stream-footer">
+        <div class="stream-end-inner">
+          <!-- IF searchList.page.Total > "1" -->
+            <!-- IF searchList.page.Prev != "" -->
+            <a href="{:searchList.page.Prefix}{:searchList.page.Prev}">上一页</a>
+            <!-- IF searchList.page.Next != "" -->
+            <span class="pagination">{:searchList.page.Current} / {:searchList.page.Total}</span>
+            <!-- ENDIF -->
+            <!-- ENDIF -->
+            <!-- IF searchList.page.Next != "" -->
+            <a href="{:searchList.page.Prefix}{:searchList.page.Next}">下一页</a>
+            <!-- ENDIF -->
+          <!-- ELSE -->
+            <span class="pagination"><!-- IF searchList.count > "0" -->已加载全部结果<!-- ELSE -->抱歉！什么都没找到 -_-<!-- ENDIF --></span>
+          <!-- ENDIF -->
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>设置 - {:PHPSayConfig.sitename}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/phpsay.css" />
+  <script type="text/javascript" src="static/jquery.js"></script>
+  <script type="text/javascript" src="static/phpsay.global.js"></script>
+  <!-- IF settingType == "avatar" -->
+  <script type="text/javascript" src="static/jquery.uploadify.min.js"></script>
+  <script type="text/javascript" src="static/phpsay.upload.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/uploadify.css" />
+  <!-- ENDIF -->
+  <!-- INCLUDE _analytics.html -->
+</head>
+<body>
+  <!-- INCLUDE _header.html -->
+  <div class="container">
+    <div class="dashboard ">
+      <!-- INCLUDE _left_profile.html -->
+      <div class="bar-nav">
+        <ul class="nav-links">
+          <li><a class="first-child<!-- IF settingType == "avatar" --> active<!-- ENDIF -->" href="settings.php">头像<i class="web-icon chev-right"></i></a></li>
+          <li><a<!-- IF settingType == "email" --> class="active"<!-- ENDIF --> href="settings.php?with=email">邮箱<i class="web-icon chev-right"></i></a></li>
+          <li><a class="last-child<!-- IF settingType == "password" --> active<!-- ENDIF -->" href="settings.php?with=password">密码<i class="web-icon chev-right"></i></a></li>
+        </ul>
+      </div>
+      <!-- INCLUDE _left_copyright.html -->
+    </div>
+    <div class="content">
+      <!-- IF settingType == "avatar" -->
+        <div class="content-header">
+          <div class="header-inner">
+            <h2>头像</h2>
+          </div>
+        </div>
+        <div class="setting-profile">
+          <div class="setting-inner">
+            <label class="avatar-label">头像</label>
+            <img src="{:userInfo.avatar}" class="current-avatar">
+            <div class="select-avatar">
+              <input type="file" name="avatar-file" id="avatar-file">
+            </div>
+          </div>
+        </div>
+        <div class="setting-footer">
+          <div class="setting-end-inner">
+            <button type="button" class="setting-button">开始上传</button>
+          </div>
+        </div>
+        <script type="text/javascript">uploadAvatar();</script>
+      <!-- ELSEIF settingType == "email" -->
+        <!-- IF userInfo.password == "" -->
+          <div class="content-header">
+            <div class="header-inner">
+              <h2>邮箱</h2>
+            </div>
+          </div>
+          <div class="setting-footer">
+            <div class="setting-end-text">
+              设置邮箱前需要先设置个人<a href="settings.php?with=password">密码</a>
+            </div>
+          </div>
+        <!-- ELSE -->
+          <form id="emailSetting" name="emailSetting" method="post">
+            <div class="content-header">
+              <div class="header-inner">
+                <h2>邮箱</h2>
+              </div>
+            </div>
+            <div class="setting-profile">
+              <div class="setting-inner">
+                <fieldset id="email_fieldset" class="control-group">
+                  <label class="control-label" for="user_email" data="{:userInfo.email}">邮件地址</label>
+                  <div class="controls">
+                    <input id="user_email" type="text" name="user_email" value="{:userInfo.email}" maxlength="36">
+                    <p>邮件地址为登录账号，不会公开显示。</p>
+                  </div>
+                </fieldset>
+                <fieldset class="control-group" id="control-current-password">
+                  <label class="control-label" for="current_password">当前密码</label>
+                  <div class="controls">
+                    <input id="current_password" type="password" name="current_password" maxlength="26">
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="setting-footer">
+              <div class="setting-end-inner">
+                <button type="submit" class="setting-button" disabled="disabled">保存设置</button>
+              </div>
+            </div>
+          </form>
+          <script type="text/javascript">$("#emailSetting input").keyup(checkEmailInput);$("#emailSetting").submit(settingEmail);</script>
+        <!-- ENDIF -->
+      <!-- ELSEIF settingType == "password" -->
+      <form id="passwdSetting" name="passwdSetting" method="post">
+        <div class="content-header">
+          <div class="header-inner">
+            <h2>密码</h2>
+          </div>
+        </div>
+        <div class="setting-profile">
+          <div class="setting-inner">
+            <fieldset class="control-group<!-- IF userInfo.password == "" --> hidden<!-- ENDIF -->" id="control-current-password">
+              <label class="control-label" for="current_password">当前密码</label>
+              <div class="controls">
+                <input id="current_password" type="password" name="current_password" maxlength="26">
+              </div>
+            </fieldset>
+            <fieldset class="control-group" id="control-user-password">
+              <label class="control-label" for="user_password"><!-- IF userInfo.password == "" -->设置<!-- ELSE -->新<!-- ENDIF -->密码</label>
+              <div class="controls">
+                <input id="user_password" type="password" name="user_password" maxlength="26">
+              </div>
+            </fieldset>
+            <fieldset class="control-group">
+              <label class="control-label" for="user_password_confirmation">确认密码</label>
+              <div class="controls">
+                <input id="user_password_confirmation" type="password" name="user_password_confirmation" maxlength="26">
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="setting-footer">
+          <div class="setting-end-inner">
+            <button type="submit" class="setting-button" disabled="disabled">保存设置</button>
+          </div>
+        </div>
+      </form>
+      <script type="text/javascript">$("#passwdSetting input").keyup(checkPasswordInput);$("#passwdSetting").submit(settingPassword);</script>
+      <!-- ENDIF -->
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="alert-messages">
+    <div class="message">
+      <span class="message-text"></span>
+    </div>
+  </div>
+</body>
+</html>

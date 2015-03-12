@@ -1,0 +1,276 @@
+body {
+	margin:0;
+	padding:0;
+	background-color:#7d9eae;
+	background:url("cover.png") repeat fixed 0 0 / contain rgba(0, 0, 0, 0);
+	font-family:"Helvetica Neue",sans-serif,"Microsoft Yahei","SimHei";
+	font-weight:300;
+	line-height:1.2;
+}
+form {
+	margin:0;
+	padding:0;
+}
+.hidden {
+	display:none;
+}
+.notice {
+	margin:200px auto auto auto;
+	text-align:center;
+	color:#FFF;
+	font-weight:300;
+}
+.notice .title {
+	font-size:45px;
+	line-height:90px;
+}
+.notice .message {
+	font-size:21px;
+	line-height:30px;
+}
+.header {
+	margin:10px 0 0 10px;
+	color:#e2e9ec;
+	font:normal bold 16px/20px Verdana;
+}
+.footer {
+	position:absolute;
+	left:0;
+	right:10px;
+	bottom:0;
+	height:30px;
+}
+.footer .links {
+	font-size:13px;
+	text-align:right;
+	color:rgba(255,255,255,0.8);
+	color:#FFF\9;
+}
+.footer .links a {
+	text-decoration:none;
+	color:rgba(255,255,255,0.8);
+	color:#FFF\9;
+}
+.footer .links a:hover {
+	color:#FFF;
+}
+.footer .links .separator {
+	display:inline-block;
+	vertical-align:baseline;
+	height:10px;
+	width:1px;
+	margin:0 10px;
+	background-color:rgba(230,234,237,0.2);
+	background-color:rgb(230,234,237)\9;
+}
+.loginwindow {
+	width:320px;
+	height:186px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin:-93px 0 0 -160px;
+	background-color:#ffffff;
+	border-radius:15px;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
+}
+.loginwindow .logintype {
+	margin:10px auto 1px auto;
+	width:264px;
+	height:132px;
+}
+.loginwindow .logintype .artistlogin {
+	float:left;
+	margin:18px;
+	width:96px;
+	height:96px;
+	text-align:center;
+	color:#5f7883;
+	font:normal normal 12px/24px Verdana;
+	cursor:pointer;
+}
+.loginwindow .logintype .artistlogin .artisticon {
+	margin:auto;
+	width:64px;
+	height:64px;
+	background:url("artist.png") no-repeat;
+	background-size:64px 64px;
+}
+.loginwindow .logintype .emaillogin {
+	float:left;
+	margin:18px;
+	width:96px;
+	height:96px;
+	text-align:center;
+	color:#5f7883;
+	font:normal normal 12px/24px Verdana;
+	cursor:pointer;
+}
+.loginwindow .logintype .emaillogin .emailicon {
+	margin:auto;
+	width:64px;
+	height:64px;
+	background:url("email.png") no-repeat;
+	background-size:64px 64px;
+}
+.loginwindow .logintips{
+	text-align:center;
+	font-size:12px;
+	color:rgb(149,178,187);
+}
+.connectwindow {
+	width:360px;
+	height:320px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin:-160px 0 0 -180px;
+	background-color:#ffffff;
+	border-radius:50px;
+	-webkit-border-radius:50px;
+	-moz-border-radius:50px;
+}
+.connectwindow .closewindow {
+	position:absolute;
+	width:30px;
+	height:30px;
+	right:0px;
+	top:0px;
+	border-radius:15px;
+	cursor:pointer;
+	background:url("close-button.png") no-repeat;
+	background-size:30px 30px;
+	display:none;
+}
+.connectwindow .title {
+	margin-top:50px;
+	height:36px;
+    color:#5F7883;
+    font-size:32px;
+    text-align:center;
+}
+.connectwindow .titlelow {
+	margin-top:45px;
+	margin-bottom:-10px;
+	height:36px;
+    color:#5F7883;
+    font-size:32px;
+    text-align:center;
+}
+.connectwindow .connectavatar {
+	margin:30px auto;
+	text-align:center;
+}
+.connectwindow .connectavatar img {
+	width:50px;
+	height:50px;
+	border:3px solid #597883;
+	border-radius:8px;
+	-webkit-border-radius:8px;
+	-moz-border-radius:8px;
+}
+.connectwindow .connectinfo {
+	margin:auto;
+	text-align:center;
+	color:#597883;
+	font:normal bold 16px/26px Verdana;
+}
+.connectwindow .connectform {
+	margin:30px;
+}
+.connectwindow .connectform .connectinput {
+	border-bottom:1px solid #CED6DA;
+	border-left:none;
+	border-right:none;
+	position:relative;
+	height:50px;
+}
+.connectwindow .connectform .topborder {
+	border-top:1px solid #CED6DA;
+}
+.connectwindow .connectform *:focus {
+	outline:none;
+}
+.connectwindow .connectform .connectinput .placeholder {
+	position:absolute;
+	z-index:1;
+	color:#999;
+	font-size:15px;
+	width:260px;
+	height:50px;
+	line-height:50px;
+	padding:0 5px;
+}
+.connectwindow .connectform .connectinput .ipt {
+	position:absolute;
+	z-index:2;
+	background:none repeat scroll 0 0 rgba(0, 0, 0, 0);
+	border:none;
+	color:#555;
+	font-size:19px;
+	font-weight:inherit;
+	width:255px;
+	height:50px;
+	padding:0 5px;
+}
+.connectwindow .connectform .connectinput .iptlong {
+	width:290px;
+}
+.connectwindow .connectform .connectinput .iptshort {
+	width:90px;
+}
+.connectwindow .connectform .connectinput .btn {
+	width:26px;
+	height:26px;
+	border:0;
+	background:url("submit-button.png") no-repeat;
+	background-size:25px 25px;
+	cursor:pointer;
+	position:absolute;
+	left:273px;
+	top:13px;
+	z-index:3;
+}
+.connectwindow .connectform .connectinput .btn:disabled {
+	opacity:0.4;
+}
+.connectwindow .connectform .connectinput .loading {
+	width:26px;
+	height:26px;
+	border:0;
+	background:url("loading.gif") no-repeat;
+	background-size:25px 25px;
+	cursor:wait;
+	position:absolute;
+	left:273px;
+	top:13px;
+	z-index:5;
+}
+.connectwindow .connectform .connectinput img {
+	position:absolute;
+	left:100px;
+	top:5px;
+	width:150px;
+	height:40px;
+	border:0;
+	z-index:5;
+	cursor:pointer;
+}
+.connectwindow .connecttip {
+	margin-top:38px;
+	text-align:center;
+	color:#597883;
+	font:normal normal 15px/20px Verdana;
+}
+.connectwindow .connecttip a.signup {
+	color:#597883;
+	font-size:14px;
+	text-decoration:none;
+}
+.connectwindow .connecttip a.forgot {
+	color:rgb(31,96,38);
+	font-size:14px;
+	text-decoration:none;
+	display:none;
+}

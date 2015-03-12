@@ -1,0 +1,23 @@
+<!-- BEGIN replyList.list -->
+<li class="reply-item" id="item-{:pid}">
+  <div class="stream-content">
+    <a href="user.php?id={:uid}" class="item-user"><img class="item-avatar" src="{:avatar}" alt="{:nickname}"><strong class="item-nickname">{:nickname}</strong></a>
+    <small class="time">{:posttime}</small>
+    <p class="item-message">{:message}</p>
+    <!-- IF smallimg != "" -->
+    <div class="item-picture">
+      <img src="{:smallimg}" data-expand="{:bigimage}" alt="" title="">
+    </div>
+    <!-- ENDIF -->
+    <div class="stream-item-footer">
+      <div class="item-actions">
+        <a onclick="replyAt('{:nickname}');"><span class="web-icon icon-reply"></span>回复</a>
+        <!-- IF top.loginInfo.group > "1" -->
+        <a onclick="deleteReply({:pid});" id="deleteReply-{:pid}"><span class="web-icon icon-trash"></span>删除</a>
+        <!-- ENDIF -->
+        <a onclick="likeReply({:pid});" id="likeReply-{:pid}"><span class="web-icon icon-like"></span>({:likes})</a>
+      </div>
+    </div>
+  </div>
+</li>
+<!-- END -->

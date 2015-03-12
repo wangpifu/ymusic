@@ -1,0 +1,15 @@
+<div class="mini-profile">
+  <div class="profile-summary">
+    <a href="user.php">
+      <div class="profile-content">
+        <img src="{:loginInfo.avatar}" id="profile-avatar"><b>{:loginInfo.nickname}</b><small>view my profile</small>
+      </div>
+    </a>
+  </div>
+  <div class="profile-bottom">
+  	<a href="user.php?list=afollowing" class="notify-count"><strong><?php echo count($_obj["afollowing"]);?></strong>bands following</a>
+  	<a href="user.php?list=ufollowing" class="favorite-count"><strong><?php echo count($_obj["ufollowing"]);?></strong>guys following</a>
+  	<a class="balance-count" href="user.php?list=type">
+      <strong><?php echo count($_obj['userInfo']["type"]);?></strong>music tastes<br><br></a>
+	</div>
+</div>
